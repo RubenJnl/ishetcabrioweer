@@ -1,14 +1,23 @@
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
 
+import PageHeader from '../components/pageHeader'
+import WeatherData from '../components/weatherData'
+
 export default function Home() {
   return (
     <div className={styles.container}>
       <Head>
-        <title>Create Next App</title>
-        <link rel="icon" href="/favicon.ico" />
+        <title>Is het cabrio weer?</title>
+        <link rel='favicon' href='favicon.ico' />
       </Head>
 
+      <PageHeader>
+        <h1>Is het cabrio weer?</h1>
+      </PageHeader>
+      <WeatherData>
+        <div>child el</div>
+      </WeatherData>
       <main className={styles.main}>
         <h1 className={styles.title}>
           Welcome to <a href="https://nextjs.org">Next.js!</a>
