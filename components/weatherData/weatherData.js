@@ -1,6 +1,7 @@
 
 import axios from 'axios'
 import { useState, useEffect } from 'react'
+import useGlobal from "./../../store";
 import * as Styles from './styles'
 
 const WeatherData = ({
@@ -9,6 +10,15 @@ const WeatherData = ({
   const url = 'https://api.openweathermap.org/data/2.5/weather'
   const Key = {appid : 'f5391f493d31e7e6092af03010cd1d07'} 
   
+  const [globalState, globalActions] = useGlobal();
+  const [sunriseEpoch, setSunriseEpoch] = useGlobal(
+    state => state.sunriseEpoch,
+    actions => actions.setSunriseEpoch
+  )
+  const [sunsetEpoch, setSunsetEpoch] = useGlobal(
+    state => state.sunsetEpoch,
+    actions => actions.setSunsetEpoch
+  )
   const [geoData, setGeoData] = useState({"lon": 5.9,"lat": 51.966671})
   const [fromApi, setResponse] = useState(false)
   const [errorMessage, setErrorMessage] = useState(false)
@@ -39,10 +49,11 @@ const WeatherData = ({
     discourage : 7
   }
   const resultMessages = {
-    toMuch : 'Heerlijk weer maar toch wat aan de warme kant, neem voldoende water mee',
-    good : 'Perfect om open te rijden',
+    toMuch : 'Heerlijk weer maar toch wat aan de warme kant, neem voldoende water mee!',
+    good : 'Perfect om open te rijden!',
     fair : 'Goed tot zeer goed weer om open te rijden',
     discourage : 'Prima weer om open te rijden, maar wel kans op een bui.',
+    justdont : 'Momenteel is het niet aan te raden om open te gaan rijden!',
     unknown : 'Op dit moment is het slecht te voorspellen'
   }
 
@@ -66,6 +77,12 @@ const WeatherData = ({
       } else if (temp <= temperature.discourage ){
         condition = 'discourage'
       }
+    } else if ((condition === 'discourage' || condition === 'unknown')) {
+      if (temp >= temperature.discourage && temp < temperature.fair){
+        condition = 'discourage'
+      } else if (temp <= temperature.discourage ){
+        condition = 'justdont'
+      }
     }
 
     setResult(resultMessages[condition])
@@ -75,7 +92,7 @@ const WeatherData = ({
   
   useEffect(() => {
     
-    axios.get(`${url}?lat=${geoData.lat}&lon=${geoData.lon}&appid=${Key.appid}&units=metric&lang=nl`)
+    axios.get(`${url}?lat=${geoData.lat}&lon=${geoData.lon}&appid=${Key.appid}&units=metric&lang=nl&v=3`)
     .then((resp) => {
       setResponse(resp)
       if (resp.data.weather){
@@ -83,6 +100,9 @@ const WeatherData = ({
           setErrorMessage(false)
         }
         getCabrioConditions(resp.data)
+        console.log(resp.data.sys);
+        setSunriseEpoch(resp.data.sys.sunrise)
+        setSunsetEpoch(resp.data.sys.sunset)
       } else {
         setErrorMessage('er is helaas iets mis gegaan')
       }

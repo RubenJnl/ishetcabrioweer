@@ -1,10 +1,26 @@
+import { useState, useEffect } from 'react'
+import useGlobal from "../store";
+
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
 
+
 import PageHeader from '../components/pageHeader'
 import WeatherData from '../components/weatherData'
+import SunRiseSet from '../components/sunRiseSet'
+
 
 export default function Home() {
+
+  const [sunriseEpoch, setSunriseEpoch] = useGlobal(
+    state => state.sunriseEpoch,
+    actions => actions.setSunriseEpoch
+  );
+  const [sunsetEpoch, setSunsetEpoch] = useGlobal(
+    state => state.sunsetEpoch,
+    actions => actions.setSunsetEpoch
+  );
+
   return (
     <div className={styles.container}>
       <Head>
@@ -16,8 +32,17 @@ export default function Home() {
         <h1>Is het cabrio weer?</h1>
       </PageHeader>
       <WeatherData>
+        <p>sunriseEpoch: {sunriseEpoch}</p>
+        <p>sunsetEpoch: {sunsetEpoch}</p>
         <div>child el</div>
       </WeatherData>
+      <SunRiseSet
+        // sunRise={sunRise}
+        // sunSet={sunSet}
+      >
+        
+      </SunRiseSet>
+      
       <main className={styles.main}>
         <h1 className={styles.title}>
           Welcome to <a href="https://nextjs.org">Next.js!</a>
