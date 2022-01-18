@@ -1,13 +1,13 @@
-import Head from 'next/head'
+import * as Styles from './styles';
 
 const PageHeader = ({
   children
 }) => {
 
   return (
-    <Head>
+    <Styles.Header>
       {children}
-    </Head>
+    </Styles.Header>
   )
 }
 

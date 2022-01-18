@@ -4,15 +4,15 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "next build && next export",
     "start": "next start"
   },
   "dependencies": {
-    "axios": "^0.21.1",
-    "next": "10.0.6",
+    "axios": "^0.21.4",
+    "next": "^12.0.8",
     "react": "17.0.1",
     "react-dom": "17.0.1",
-    "styled-components": "^5.2.1",
-    "use-global-hook": "^0.2.1"
+    "styled-components": "^5.3.3",
+    "use-global-hook": "^0.2.5"
   }
 }

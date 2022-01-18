@@ -1,5 +1,4 @@
-import styled from 'styled-components'
-// import styled, { css } from 'styled-components'
+import styled, { css } from 'styled-components'
 
 
 export const ErrorMessage = styled.div`
@@ -7,21 +6,70 @@ export const ErrorMessage = styled.div`
   border: 2px solid red;
 `
 
-// export const ErrorMessage = `
-//   ${({ theme }) => css`
-//       position: relative;
-//       margin-top: 15px;
-//       color: ${theme.colors.secondary.error};
-//       font-size: 14px;
-//       padding-left: 44px;
-//       font-family: ${({ theme }) => theme.fonts.body};
 
-//       svg {
-//           position: absolute;
-//           top: 50%;
-//           left: 0;
-//           font-size: 21px;
-//           transform: translateY(-50%);
-//       }
-//   `}
-// `
+const tempSettings = ({ temperature }) => css`
+    
+    ${temperature <= 3 && css`
+      color: #4aaaff;
+
+      ::before {
+        content: ' 🥶';
+      }
+    `}
+
+    ${temperature > 3 && temperature <= 8 && css`
+      color: #345f85;
+
+      ::before {
+        content: '😬';
+      }
+    `}
+
+    ${temperature > 8 && temperature <= 15 && css`
+      color: #7ead36;
+
+      ::before {
+        content: '🙂';
+      }
+    `}
+
+    ${temperature > 15 && temperature <= 21 && css`
+      color: #ccc704;
+      
+      ::before {
+        content: '😎';
+      }
+    `}
+    
+    ${temperature > 21 && temperature <= 29 && css`
+      color: #cc7d04;
+
+      ::before {
+        content: '😎';
+      }
+    `}
+    
+    ${temperature > 29 && css`
+      color: #cc0504;
+
+      ::before {
+        content: '🥵';
+      }
+    `}
+
+
+  ::before {
+    margin: 0 3px;
+    display: inline-block;
+  }
+`
+
+export const Temperature = styled.span`
+  ${tempSettings}
+  font-size: 1.2em;
+`
+
+export const TemperatureWrapper = styled.p`
+  line-height: 2em;
+  text-align: bottom;
+`

@@ -1,9 +1,7 @@
-import { useState, useEffect } from 'react'
 import useGlobal from "../store";
 
 import Head from 'next/head'
-import styles from '../styles/Home.module.css'
-
+import styles from '../styles/page.module.css'
 
 import PageHeader from '../components/pageHeader'
 import WeatherData from '../components/weatherData'
@@ -22,78 +20,57 @@ export default function Home() {
   );
 
   return (
-    <div className={styles.container}>
+    <>
       <Head>
         <title>Is het cabrio weer?</title>
-        <link rel='favicon' href='favicon.ico' />
+        <meta name="viewport" content="width=device-width,initial-scale=1"></meta>
+        <meta name="description" content="Geeft een indicatie op basis van weersverwachting of het prettig rijden is met het dak open."></meta>
+
+        <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32x32.png" />
+        <link rel="icon" type="image/png" sizes="16x16" href="/icons/favicon-16x16.png" />
+        <link rel="mask-icon" href="/icons/safari-pinned-tab.svg" color="#5c5b2b" />
+        <link rel="shortcut icon" href="/icons/favicon.ico" />
+        <meta name="msapplication-TileColor" content="#ffc40d" />
+        <meta name="theme-color" content="#ffffff"></meta>
+
+        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-16618146-5"></script>
+        <script dangerouslySetInnerHTML={{ __html: `
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments)}
+          gtag('js', new Date());
+          gtag('config', 'UA-16618146-5')`}}>
+        </script>
       </Head>
-
       <PageHeader>
+
         <h1>Is het cabrio weer?</h1>
+
+        <SunRiseSet timeOnly />
       </PageHeader>
-      <WeatherData>
-        <p>sunriseEpoch: {sunriseEpoch}</p>
-        <p>sunsetEpoch: {sunsetEpoch}</p>
-        <div>child el</div>
-      </WeatherData>
-      <SunRiseSet
-        // sunRise={sunRise}
-        // sunSet={sunSet}
-      >
-        
-      </SunRiseSet>
-      
-      <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
+      <div className={styles.container}>
 
-        <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.js</code>
-        </p>
+        <main>
+          <WeatherData />
 
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
+          <SunRiseSet />
+        </main>
+      </div>
 
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className={styles.card}
-          >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
-        </div>
-      </main>
-
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel Logo" className={styles.logo} />
-        </a>
+      <footer className="footer">
+        <ul className="links">
+          <li>
+            <a href="https://ishetalmotorweer.nl" rel="noopener" target="_blank">ishetalmotorweer.nl</a> 
+          </li>
+          <li>
+            <a href="https://kwartoverbier.nl" rel="noopener" target="_blank">kwartoverbier.nl</a> 
+          </li>
+          <li>
+            <a href="https://ishetborreltijd.nl" rel="noopener" target="_blank">ishetborreltijd.nl</a>
+          </li>
+        </ul>
       </footer>
-    </div>
+      
+    </>
   )
 }
